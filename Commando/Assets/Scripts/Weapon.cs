@@ -16,12 +16,15 @@ public class Weapon : MonoBehaviour
     public GameObject bulletPrefab;
     public GameObject punchPrefab;
     public SoundManager.Sound gunshotSound;
-    public Text ammunitionText;
+    public Text clipText;
+    public Text ammoText;
 
     public int clipSize = 10;
     public float fireRate = 15f;
     public float reloadTime = 1f; //adjust reload time to make it melodic, like shotgun is right now
     public bool autoFire = true;
+    public EAmmoType ammoType;
+
 
     private float nextTimeToFire = 0f;
     private int currentAmmo;
@@ -41,7 +44,7 @@ public class Weapon : MonoBehaviour
     }
 
     //TODO make this work somehow (ammo types, and taking their state from player's eq)
-    /*public y.tube/jakWybracTypZmiennejZaPomocaMonoBehaviour ammoType;
+    /*public 
     void OnEnable()
     {
         inventory = GetComponent<Inventory>();
@@ -119,7 +122,7 @@ public class Weapon : MonoBehaviour
 
         yield return new WaitForSeconds(reloadTime);
         //currentAmmo = clipSize;
-        currentAmmo = 0 + InventoryManager.getAmmo(clipSize);
+        currentAmmo = 0 + InventoryManager.getClip(clipSize, ammoType);
 
         
         isReloading = false;
@@ -127,7 +130,8 @@ public class Weapon : MonoBehaviour
 
     private void OnGUI()
     {
-        ammunitionText.text = currentAmmo.ToString() + "/" + clipSize.ToString();   
+        clipText.text = currentAmmo.ToString() + "/" + clipSize.ToString();
+        ammoText.text = InventoryManager.getAmmo(ammoType).ToString();
     }
 
 }

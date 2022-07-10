@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 
 
-
+// TODO Spaghetti code, refactor
 //TODO do i need MonoBehaviour??
 public partial class InventoryManager : MonoBehaviour
 {
@@ -32,19 +32,10 @@ public partial class InventoryManager : MonoBehaviour
         new AmmoType(EAmmoType.high_caliber, 5) };
 
 
-    //TODO Spaghetti code, refactor
+    
     private void Start()
     {
-        /*
 
-        AmmoType lowCal = new AmmoType(EAmmoType.low_caliber, 20);
-        AmmoType shotgun = new AmmoType(EAmmoType.shotgun_shells, 10);
-        AmmoType highCal = new AmmoType(EAmmoType.high_caliber, 5);
-
-        ammoTypes.SetValue(lowCal, 0);
-        ammoTypes.SetValue(shotgun, 1);
-        ammoTypes.SetValue(highCal, 2);
-        */
     }
 
     public static int getClip(int clipSize, EAmmoType eammoType)

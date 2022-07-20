@@ -20,6 +20,7 @@ public class CharacterController2D : MonoBehaviour
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
 	private bool idle = true;
+	private float lastX = 0;
 
 	[Header("Events")]
 	[Space]
@@ -31,8 +32,8 @@ public class CharacterController2D : MonoBehaviour
 
 	public BoolEvent OnCrouchEvent;
 	private bool m_wasCrouching = false;
-
-	private float lastX = 0;
+	
+	
 
 	private void Awake()
 	{

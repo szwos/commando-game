@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     public int health = 100;
     public GameObject deathEffect;
+    public DialogueTrigger deathMessage; //TODO testing only
 
 
     // Start is called before the first frame update
@@ -33,8 +34,9 @@ public class Enemy : MonoBehaviour
     void Die ()
     {
         //Instantiate(deathEffect, transform.position, Quaternion.identity);
+        deathMessage.TriggerDialogue();
         Destroy(gameObject);
-
+        
   
 
     }

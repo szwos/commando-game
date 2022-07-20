@@ -36,6 +36,15 @@ public class PlayerMovement : MonoBehaviour
             isCrouching = false;
         }
 
+        if(Input.GetButtonDown("Submit"))
+        {
+            if(FindObjectOfType<DialogueManager>().isDialogueInProgress())
+            {
+                FindObjectOfType<DialogueManager>().DisplayNextSentence();
+                return;
+            }
+            
+        }
 
 
     }

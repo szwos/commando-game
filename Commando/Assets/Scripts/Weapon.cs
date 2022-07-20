@@ -18,18 +18,22 @@ public class Weapon : MonoBehaviour
     public SoundManager.Sound gunshotSound;
     public Text clipText;
     public Text ammoText;
+    public QuickReload quickReload;
 
     public int clipSize = 10;
     public float fireRate = 15f;
     public float reloadTime = 1f; //adjust reload time to make it melodic, like shotgun is right now
     public bool autoFire = true;
     public EAmmoType ammoType;
+    [Range(1, 100)] public int quickReloadRange = 10;
+    [Range(1, 100)]public int quickReloadBeginning = 70;
 
 
     private float nextTimeToFire = 0f;
     private int currentAmmo;
     private bool inputFire = false;
     private bool isReloading = false;
+    private bool failed;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +45,7 @@ public class Weapon : MonoBehaviour
     private void OnEnable()
     {
         isReloading = false;
+        quickReload.setRange(quickReloadRange, quickReloadBeginning);
     }
 
     //TODO make this work somehow (ammo types, and taking their state from player's eq)
@@ -89,7 +94,7 @@ public class Weapon : MonoBehaviour
         else
             inputFire = false;
 
-
+        
         if (inputFire && Time.time >= nextTimeToFire)
         {
             SoundManager.PlaySound(gunshotSound);
@@ -120,7 +125,32 @@ public class Weapon : MonoBehaviour
         //TODO play different reload sound for different weapon (remember, that weapons can share the same SpecialBehaviour, but can have other reload sounds)
         SoundManager.PlaySound(SoundManager.Sound.shotgun_reload);
 
-        yield return new WaitForSeconds(reloadTime);
+        
+
+        //yield return new WaitForSeconds(reloadTime);
+
+        failed = false;
+        for(int i = 0; i < 100; i++)
+        {
+            quickReload.setProgress(i);
+
+            yield return new WaitForSeconds(reloadTime/100);
+            
+            if(Input.GetButtonDown("Fire1") && !failed)
+            {
+                if(i >= quickReloadBeginning && i <= i + quickReloadRange)
+                {
+                    continue;
+                } else
+                {
+                    failed = true;
+                }
+                
+
+            }
+
+        }
+
         //currentAmmo = clipSize;
         currentAmmo = 0 + InventoryManager.getClip(clipSize, ammoType);
 

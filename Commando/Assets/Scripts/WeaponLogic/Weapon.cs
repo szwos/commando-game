@@ -26,7 +26,7 @@ public class Weapon : MonoBehaviour
     public bool autoFire = true;
     public EAmmoType ammoType;
     [Range(1, 100)] public int quickReloadRange = 10;
-    [Range(1, 100)]public int quickReloadBeginning = 70;
+    [Range(1, 100)]public int quickReloadPosition = 70;
 
 
     private float nextTimeToFire = 0f;
@@ -45,7 +45,8 @@ public class Weapon : MonoBehaviour
     private void OnEnable()
     {
         isReloading = false;
-        quickReload.setRange(quickReloadRange, quickReloadBeginning);
+        if(quickReload != null)
+            quickReload.setRange(quickReloadRange, quickReloadPosition);
     }
 
     //TODO make this work somehow (ammo types, and taking their state from player's eq)
@@ -132,15 +133,17 @@ public class Weapon : MonoBehaviour
         failed = false;
         for(int i = 0; i < 100; i++)
         {
-            quickReload.setProgress(i);
+            if(quickReload != null)
+                quickReload.setProgress(i);
 
             yield return new WaitForSeconds(reloadTime/100);
             
             if(Input.GetButtonDown("Fire1") && !failed)
             {
-                if(i >= quickReloadBeginning && i <= i + quickReloadRange)
+                Debug.Log("quickReload attempt");
+                if(i <= quickReloadPosition + quickReloadRange/2 && i >= quickReloadPosition - quickReloadRange/2)
                 {
-                    continue;
+                    break;
                 } else
                 {
                     failed = true;

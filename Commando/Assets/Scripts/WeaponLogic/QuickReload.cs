@@ -11,7 +11,6 @@ public class QuickReload : MonoBehaviour
     {
         thumb.localScale = new Vector3(range/100.0f, 1, 1);
         
-        
         //thumb.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, range);
        // thumb.SetPositionAndRotation(new Vector3(/*1.0f / beginning*/0.1f, 0f, 0f), thumb.rotation);
        // Debug.Log( (1.0f / beginning).ToString() + " beginning: " + beginning.ToString());
@@ -21,6 +20,6 @@ public class QuickReload : MonoBehaviour
     public void setProgress(int progress)
     {
         //track.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, progress);
-        track.localScale = new Vector3(progress / 100.0f, 1, 1);
+        track.localScale = new Vector3(progress / 100.0f * 2, 1, 1);
     }
 }

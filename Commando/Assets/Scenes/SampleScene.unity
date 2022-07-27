@@ -704,7 +704,8 @@ MonoBehaviour:
   firePoint: {fileID: 1893789750}
   bulletPrefab: {fileID: 3560170678079714636, guid: 44ce1cdadae64394799fa94b08c2e95a, type: 3}
   punchPrefab: {fileID: 0}
-  gunshotSound: 2
+  gunshotSound: 3
+  reloadSound: 4
   clipText: {fileID: 89570998}
   ammoText: {fileID: 1200485311}
   quickReload: {fileID: 612285523}
@@ -994,7 +995,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1893057253
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -2289,7 +2290,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1893057253
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 98e88f55ded914b46a751c70232779c1, type: 3}
   m_Color: {r: 0.9056604, g: 0.25119257, b: 0.25119257, a: 1}
@@ -2735,7 +2736,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1893057253
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.24592379, g: 0.64100754, b: 0.8301887, a: 1}
@@ -2997,7 +2998,8 @@ MonoBehaviour:
   firePoint: {fileID: 1973395034}
   bulletPrefab: {fileID: 3560170678079714636, guid: 44ce1cdadae64394799fa94b08c2e95a, type: 3}
   punchPrefab: {fileID: 0}
-  gunshotSound: 0
+  gunshotSound: 1
+  reloadSound: 6
   clipText: {fileID: 89570998}
   ammoText: {fileID: 1200485311}
   quickReload: {fileID: 612285523}
@@ -3040,7 +3042,7 @@ GameObject:
   - component: {fileID: 1592704546}
   m_Layer: 0
   m_Name: snake1
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3387,7 +3389,8 @@ MonoBehaviour:
   firePoint: {fileID: 549866182}
   bulletPrefab: {fileID: 8907334322790640520, guid: d015b9bcfe33b974b9b6bb07d540d6c0, type: 3}
   punchPrefab: {fileID: 0}
-  gunshotSound: 0
+  gunshotSound: 5
+  reloadSound: 0
   clipText: {fileID: 89570998}
   ammoText: {fileID: 1200485311}
   quickReload: {fileID: 0}
@@ -3395,7 +3398,7 @@ MonoBehaviour:
   fireRate: 15
   reloadTime: 1
   autoFire: 1
-  ammoType: 0
+  ammoType: 3
   quickReloadRange: 10
   quickReloadPosition: 70
 --- !u!114 &1832682590
@@ -4082,12 +4085,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5238198288742790384, guid: 67245b586902d654c9e7e02be777bf0f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5238198288742790384, guid: 67245b586902d654c9e7e02be777bf0f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5238198288742790384, guid: 67245b586902d654c9e7e02be777bf0f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.09708232
       objectReference: {fileID: 0}
     - target: {fileID: 5238198288742790384, guid: 67245b586902d654c9e7e02be777bf0f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.2864263
+      value: -0.355
       objectReference: {fileID: 0}
     - target: {fileID: 5238198288742790384, guid: 67245b586902d654c9e7e02be777bf0f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4121,6 +4132,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5238198288742790385, guid: 67245b586902d654c9e7e02be777bf0f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1fdfd838db73b9f41828d8aaca97e89a, type: 3}
+    - target: {fileID: 5238198288742790385, guid: 67245b586902d654c9e7e02be777bf0f, type: 3}
+      propertyPath: m_SortingLayer
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5238198288742790385, guid: 67245b586902d654c9e7e02be777bf0f, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 427915411
+      objectReference: {fileID: 0}
     - target: {fileID: 5238198288742790388, guid: 67245b586902d654c9e7e02be777bf0f, type: 3}
       propertyPath: m_Name
       value: Crate
@@ -4129,21 +4152,33 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 5238198288742790388, guid: 67245b586902d654c9e7e02be777bf0f, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 5238198288742790391, guid: 67245b586902d654c9e7e02be777bf0f, type: 3}
       propertyPath: m_Size.x
-      value: 0.61595297
+      value: 0.5129091
       objectReference: {fileID: 0}
     - target: {fileID: 5238198288742790391, guid: 67245b586902d654c9e7e02be777bf0f, type: 3}
       propertyPath: m_Size.y
-      value: 0.6137624
+      value: 0.31761408
       objectReference: {fileID: 0}
     - target: {fileID: 5238198288742790391, guid: 67245b586902d654c9e7e02be777bf0f, type: 3}
       propertyPath: m_Offset.x
-      value: 0.0050979257
+      value: -0.00086274743
       objectReference: {fileID: 0}
     - target: {fileID: 5238198288742790391, guid: 67245b586902d654c9e7e02be777bf0f, type: 3}
       propertyPath: m_Offset.y
-      value: -0.00060391426
+      value: 0.041160583
+      objectReference: {fileID: 0}
+    - target: {fileID: 5238198288742790391, guid: 67245b586902d654c9e7e02be777bf0f, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 5238198288742790391, guid: 67245b586902d654c9e7e02be777bf0f, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.64
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67245b586902d654c9e7e02be777bf0f, type: 3}

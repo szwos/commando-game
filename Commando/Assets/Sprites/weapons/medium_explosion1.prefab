@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7172097544532874231}
   - component: {fileID: 7172097544532874228}
   - component: {fileID: 7172097544532874225}
+  - component: {fileID: -1570356136912515802}
   m_Layer: 0
   m_Name: medium_explosion1
   m_TagString: Untagged
@@ -118,3 +119,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb7b1a8564339fa4d94951655f466b7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionSound: 7
+  targetedTags:
+  - Enemy
+  damage: 30
+--- !u!58 &-1570356136912515802
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7172097544532874229}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0036887527, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.43360245

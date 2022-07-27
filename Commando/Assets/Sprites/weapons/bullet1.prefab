@@ -146,8 +146,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23a3302e18d777646aabfb6b13acb9e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 3560170678079714638}
+  targetedTags:
+  - Enemy
   timeout: 10
   speed: 30.54
   damage: 20
-  rb: {fileID: 3560170678079714638}
   DestroyOnImpact: 1

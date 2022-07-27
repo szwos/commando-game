@@ -6,10 +6,14 @@ public static class SoundManager
 {
     public enum Sound
     {
+        none,
         gun1_shoot,
         player_move,
         shotgun_shoot,
         shotgun_reload,
+        woosh1,
+        pistol_reload,
+        grenade_explosion,
     }
 
     private static Dictionary<Sound, float> soundTimerDictionary;
@@ -33,7 +37,9 @@ public static class SoundManager
             soundGameObject.transform.position = position;
             AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
             audioSource.clip = GetAudioClip(sound);
-            audioSource.Play();
+
+            if(audioSource.clip != null)
+                audioSource.Play();
 
             Object.Destroy(soundGameObject, audioSource.clip.length);
         }
@@ -49,8 +55,9 @@ public static class SoundManager
                 oneShotGameObject = new GameObject("One Shot Sound");
                 oneShotAudioSource = oneShotGameObject.AddComponent<AudioSource>();
             }
-            
-            oneShotAudioSource.PlayOneShot(GetAudioClip(sound));
+            AudioClip audioClip = GetAudioClip(sound);
+            if(audioClip != null)    
+                oneShotAudioSource.PlayOneShot(audioClip);
 
         }
         

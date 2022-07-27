@@ -6,6 +6,7 @@ TagManager:
   tags:
   - GameAssets
   - Bullet
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -45,6 +46,9 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: props
+    uniqueID: 427915411
     locked: 0
   - name: GUI
     uniqueID: 1893057253

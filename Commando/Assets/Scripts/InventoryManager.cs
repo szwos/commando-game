@@ -29,7 +29,9 @@ public partial class InventoryManager : MonoBehaviour
     private static AmmoType[] ammoTypes = {
         new AmmoType(EAmmoType.low_caliber, 20),
         new AmmoType(EAmmoType.shotgun_shells, 50),
-        new AmmoType(EAmmoType.high_caliber, 5) };
+        new AmmoType(EAmmoType.high_caliber, 5), 
+        new AmmoType(EAmmoType.grenade, 10)
+    };
 
 
     

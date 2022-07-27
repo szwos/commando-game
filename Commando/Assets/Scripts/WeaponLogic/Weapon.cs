@@ -16,6 +16,7 @@ public class Weapon : MonoBehaviour
     public GameObject bulletPrefab;
     public GameObject punchPrefab;
     public SoundManager.Sound gunshotSound;
+    public SoundManager.Sound reloadSound;
     public Text clipText;
     public Text ammoText;
     public QuickReload quickReload;
@@ -124,7 +125,7 @@ public class Weapon : MonoBehaviour
 
         
         //TODO play different reload sound for different weapon (remember, that weapons can share the same SpecialBehaviour, but can have other reload sounds)
-        SoundManager.PlaySound(SoundManager.Sound.shotgun_reload);
+        SoundManager.PlaySound(reloadSound);
 
         
 
@@ -140,7 +141,7 @@ public class Weapon : MonoBehaviour
             
             if(Input.GetButtonDown("Fire1") && !failed)
             {
-                Debug.Log("quickReload attempt");
+             
                 if(i <= quickReloadPosition + quickReloadRange/2 && i >= quickReloadPosition - quickReloadRange/2)
                 {
                     break;

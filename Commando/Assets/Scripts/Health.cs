@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Health : MonoBehaviour
 {
     public int health = 100;
     public GameObject deathEffect;
@@ -23,7 +23,17 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage (int damage)
     {
+
+        //TODO having multiple colliders on an entity causes it to take dmg multiple times
+        //fix a) cooldown for taking damage (few miliseconds, like in minecraft)
+        //fix b) stop dealing damage using colliders (kind of limiting approach)
+        //fix c) disable colliders GetComponent<Collider>().enabled = false and enable them in next frame / after timeout
+
+        //string msg = health.ToString() + " -> " + (health - damage).ToString();
+        //Debug.Log(msg);
+
         health -= damage;
+
 
         if (health <= 0)
         {

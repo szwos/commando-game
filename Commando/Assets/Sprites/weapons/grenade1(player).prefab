@@ -101,9 +101,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 8907334322790640527}
   explosionPrefab: {fileID: 7172097544532874229, guid: 3b034bb97c6569542a5bfed5a84dff3a, type: 3}
+  targetedTags:
+  - Enemy
   verticalSpeed: 0
   throwSpeed: 10
   fuseTime: 2
+  destroyOnImpact: 1
 --- !u!50 &8907334322790640527
 Rigidbody2D:
   serializedVersion: 4

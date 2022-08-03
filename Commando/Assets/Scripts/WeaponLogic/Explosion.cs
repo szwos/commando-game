@@ -32,7 +32,7 @@ public class Explosion : MonoBehaviour
         
         if( targetedTags.Contains(collider2D.gameObject.tag) )
         {
-            Health enemy = collider2D.GetComponent<Health>();
+            IHealth enemy = collider2D.GetComponent<IHealth>();
             if (enemy != null)
             {
                 enemy.TakeDamage(damage);

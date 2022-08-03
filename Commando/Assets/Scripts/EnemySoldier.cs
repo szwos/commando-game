@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySoldier : MonoBehaviour
+public class EnemySoldier : MonoBehaviour, IHealth
 {
 
     //layerMasks
@@ -13,11 +13,13 @@ public class EnemySoldier : MonoBehaviour
     public float attackCooldown = 5f;
     public float shootProximity = 5f;
     public float punchProximity = 1f;
+    public int health = 100;
     private bool Awake = false;
 
     //classes
     //public CharacterController2D controller2D; when it will be actually usefull i wil use Controller2D
     public FieldOfView fov;
+    public DialogueTrigger deathMessage;
 
     //objects
     public Transform playerPos; 
@@ -128,6 +130,26 @@ public class EnemySoldier : MonoBehaviour
         //controller2D.Move(speed * Time.deltaTime, false, false); when it will be actually usefull i wil use Controller2D
     }
 
+    public void TakeDamage(int damage)
+    {
+        //TODO solve problem with taking multiple damage
+
+        health -= damage;
+
+
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        //Instantiate(deathEffect, transform.position, Quaternion.identity);
+        deathMessage.TriggerDialogue();
+        Destroy(gameObject);
+    }
+
 }
 
-    
+

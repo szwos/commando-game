@@ -32,6 +32,26 @@ public class Destructible : MonoBehaviour, IHealth
 
 
     }
+        
+    Texture2D generateTextureUsingMask(Texture2D sourceTexture, IPixelMask mask) {
+        Texture2D newTex = new Texture2D(mask.width, mask.height);
+
+        for(int i = 0; i < mask.width; i++)
+        {
+            for(int j = 0; j < mask.height; j++)
+            {
+                if (mask.getMaskAt(i, j))
+                    newTex.SetPixel(i, j, sourceTexture.GetPixel(i, j));
+            }
+        }
+
+        //make texture size lesser so that it fits in the smallest possible rectangle
+        //adjustTextureSize()
+
+
+        return newTex;
+    }
+
 
     void Explode()
     {
@@ -40,7 +60,7 @@ public class Destructible : MonoBehaviour, IHealth
 
         Texture2D newTex = new Texture2D(32, 64);
         Texture2D newTex2 = new Texture2D(32, 64);
-
+        
         for (int i = 0; i < tex.width; i++)
         {
             for(int j = 0; j < tex.height; j++)

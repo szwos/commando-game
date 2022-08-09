@@ -3,37 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//TODO this whole class is pointless and everythin could be done by just returning an ID number from VoronoiDiagram
 public class VoronoiCell : IPixelMask
 {
-    //TODO should IPixelMask. be there???
-    public int width { get; }
-    public int height { get; }
+    public int width { get; set; }
+    public int height { get; set; }
 
-    bool[,] mask;
+    public int offsetX { get; }
+    public int offsetY { get; }
+
+    public Vector2Int displacement { get; }
+
+    public bool[,] Mask { get; set; }
 
 
-    public VoronoiCell(int width, int height)
+    public VoronoiCell(int width, int height, int offsetX, int offsetY, Vector2Int displacement)
     {
         this.width = width;
         this.height = height;
 
-        mask = new bool[width, height];
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
+
+        this.displacement = displacement;
+
+        Mask = new bool[width, height];
 
         for(int i = 0; i < width; i++)
         {
             for(int j = 0; j < height; j++)
             {
-                mask[i, j] = false;
+                Mask[i, j] = false;
             }
         }
 
 
-    }
 
-    public bool getMaskAt(int i, int j)
-    {
-
-        return mask[i, j];
     }
 }

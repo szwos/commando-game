@@ -6,7 +6,12 @@ public interface IPixelMask
 {
     public int width { get; }
     public int height { get; }
+    public int offsetX { get; }
+    public int offsetY { get; }
+    
+    //how much mask's center is displaced from original Texture center
+    public Vector2Int displacement { get; }
 
+    public bool[,] Mask { get;}
 
-    public bool getMaskAt(int i, int j);
 }

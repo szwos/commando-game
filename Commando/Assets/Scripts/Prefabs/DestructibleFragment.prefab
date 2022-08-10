@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 7545095582197778155}
   - component: {fileID: 9190857425537115932}
   - component: {fileID: -8637160229764405843}
-  m_Layer: 0
+  - component: {fileID: 2112803338810025064}
+  m_Layer: 1
   m_Name: DestructibleFragment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,8 +119,21 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 77105e9728ee6fd4db4cf3dc8f2080eb, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &2112803338810025064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8763399711965493070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 625b396b594e61e4e959ce6a1a13790a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 3

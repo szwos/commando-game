@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //TODO sortingLayer
-//TODO Layer (create a new one for enviromentEffects that cannot be interacted with, but will collide with ground, other enviroment props)
-//TODO Bouncy material
-//TODO smoothly disappearing after time
 //TODO rescale collider to approximately fit fragment's shape
 //TODO increased density of random seeds in place of collision that destroys gameobject
 
@@ -13,6 +10,8 @@ public class Destructible : MonoBehaviour, IHealth
 {
     public int health = 100;
     public byte numberOfFragments;
+    public float explosionSpeed = 2;
+
     //public DestructionEffect destructionEffect , then destructionEffect.explode();
     public GameObject fragmentPrefab;
 
@@ -49,37 +48,42 @@ public class Destructible : MonoBehaviour, IHealth
         Texture2D tex = gameObject.GetComponent<SpriteRenderer>().sprite.texture;
         //Pixels per unit
         float PPU = gameObject.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit;
-        Debug.Log(tex.isReadable);
+        //Debug.Log(tex.isReadable); //TODO catch exception if is not readable
 
         VoronoiDiagram diagram = new VoronoiDiagram(tex.width, tex.height, numberOfFragments, false);
 
-
         for (int i = 0; i < numberOfFragments; i++)
         {
+            //get mask
             IPixelMask mask = diagram.getCell(i);
 
-            Texture2D newTex = assignFragment(tex, mask, i);
+            //create texture
+            Texture2D newTex = assignFragment(tex, mask);
 
+            //create sprite
             Sprite newSprite = Sprite.Create(newTex, new Rect(0.0f, 0.0f, newTex.width, newTex.height), new Vector2(0.5f, 0.5f), PPU);
 
-
+            //instantiate
             GameObject fragment = Instantiate(fragmentPrefab);
 
-            
-            
+
+            //assign sprite
+            fragment.GetComponent<SpriteRenderer>().sprite = newSprite;
+
+            //adjust position
             fragment.transform.position = new Vector3(transform.position.x + mask.displacement.x/PPU, transform.position.y + mask.displacement.y/PPU, transform.position.z);
 
-            fragment.GetComponent<SpriteRenderer>().sprite = newSprite;
-        }
+            //set in motion
+            Rigidbody2D fragmentRB = fragment.GetComponent<Rigidbody2D>();
+            float angle = Vector2.SignedAngle(Vector2.right, fragment.transform.position - transform.position);
+            fragmentRB.velocity = new Vector2(Mathf.Cos(angle*Mathf.Deg2Rad) * explosionSpeed, Mathf.Sin(angle*Mathf.Deg2Rad) * explosionSpeed);
 
+
+        }
     }
 
     
-    //TODO if i will need to set pivot to a specific point (e.g centre of mass) or get any other value from mask that will be assigned to sprite, i will need this function to return sprite instead and do that assignment here
-    //TODO /\ yes i will need to and that attribute is position relative to source texture position, so i will even need to make this function operate on gameObject
-    //TODO /\ not rly, bcs i have access to mask out of this scope so no problem
-    //TODO change name, assignFragment doesn't really give much information
-    Texture2D assignFragment(Texture2D srcTexture, IPixelMask mask, int cellNumber)
+    Texture2D assignFragment(Texture2D srcTexture, IPixelMask mask)
     {
 
         Texture2D newTex = new Texture2D(mask.width, mask.height);

@@ -195,9 +195,10 @@ public class VoronoiDiagram
         for(int i = 0; i < numberOfCells; i++)
         {
             CellDimensions dim = findDimensions(i + 1, width, height);
-            
-            // MAX - MIN = LENGTH
-            cells[i] = new VoronoiCell(dim.maxX - dim.minX, dim.maxY - dim.minY, dim.minX, dim.minY, seeds[i + 1]);
+
+            // MAX - MIN = LENGTH                                                                   
+            Vector2Int displacement = seeds[i + 1] - new Vector2Int(width / 2, height / 2);
+            cells[i] = new VoronoiCell(dim.maxX - dim.minX, dim.maxY - dim.minY, dim.minX, dim.minY, displacement);
 
             for(int x = 0; x < dim.maxX - dim.minX; x++)
             {

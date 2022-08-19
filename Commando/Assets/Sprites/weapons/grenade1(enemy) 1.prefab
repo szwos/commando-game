@@ -101,9 +101,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 8907334322790640527}
   explosionPrefab: {fileID: 7172097544532874229, guid: 3b034bb97c6569542a5bfed5a84dff3a, type: 3}
+  targetedTags: []
   verticalSpeed: 250
   throwSpeed: 10
   fuseTime: 2
+  destroyOnImpact: 1
 --- !u!50 &8907334322790640527
 Rigidbody2D:
   serializedVersion: 4
@@ -123,7 +125,7 @@ Rigidbody2D:
   m_Material: {fileID: 6200000, guid: 77105e9728ee6fd4db4cf3dc8f2080eb, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!58 &-3935563834927872909
 CircleCollider2D:

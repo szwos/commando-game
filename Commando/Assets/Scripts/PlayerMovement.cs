@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     float horizontalMove = 0f;
     bool isJumping = false;
     bool isCrouching = false;
+    bool isGoingDown = false;
 
 
     // Start is called before the first frame update
@@ -36,7 +37,16 @@ public class PlayerMovement : MonoBehaviour
             isCrouching = false;
         }
 
-        if(Input.GetButtonDown("Submit"))
+        if (Input.GetButtonDown("Down"))
+        {
+            isGoingDown = true;
+            
+        } else if (Input.GetButtonUp("Down"))
+        {
+            isGoingDown = false;
+        }
+
+        if (Input.GetButtonDown("Submit"))
         {
             if(FindObjectOfType<DialogueManager>().isDialogueInProgress())
             {
@@ -53,10 +63,11 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
 
-        controller2D.Move(horizontalMove * Time.fixedDeltaTime, isCrouching, isJumping);
+        controller2D.Move(horizontalMove * Time.fixedDeltaTime, isCrouching, isJumping, isGoingDown);
         isJumping = false;
      
 
 
     }
+
 }

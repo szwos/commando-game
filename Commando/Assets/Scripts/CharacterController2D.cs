@@ -10,17 +10,19 @@ public class CharacterController2D : MonoBehaviour
 	[SerializeField] private LayerMask m_WhatIsGround;							// A mask determining what is ground to the character
 	[SerializeField] private Transform m_GroundCheck;							// A position marking where to check if the player is grounded.
 	[SerializeField] private Transform m_CeilingCheck;							// A position marking where to check for ceilings
-	[SerializeField] private Collider2D m_CrouchDisableCollider;				// A collider that will be disabled when crouching
+	[SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider that will be disabled when crouching
+	[SerializeField] private Collider2D m_GroundTouchingCollider;				// Collider that will be disabled when passing through platforms
 
 	const float k_GroundedRadius = .02f; // Radius of the overlap circle to determine if grounded
 	private bool m_Grounded;            // Whether or not the player is grounded.
 	private bool wasFalling;			//was the player falling after jumped
-	const float k_CeilingRadius = .02f; // Radius of the overlap circle to determine if the player can stand up
+	const float k_CeilingRadius = .17f; // Radius of the overlap circle to determine if the player can stand up
 	private Rigidbody2D m_Rigidbody2D;
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
 	private bool idle = true;
 	private float lastX = 0;
+	private float ColliderSize;
 
 	[Header("Events")]
 	[Space]
@@ -44,6 +46,7 @@ public class CharacterController2D : MonoBehaviour
 
 		if (OnCrouchEvent == null)
 			OnCrouchEvent = new BoolEvent();
+
 	}
 
 	private void FixedUpdate()
@@ -78,11 +81,14 @@ public class CharacterController2D : MonoBehaviour
 					OnLandEvent.Invoke();
 			}
 		}
+
+		SlopeCheck();
 	}
 
 
-	public void Move(float move, bool crouch, bool jump)
+	public void Move(float move, bool crouch, bool jump, bool down)
 	{
+		
 		// If crouching, check to see if the character can stand up
 		if (!crouch)
 		{
@@ -102,6 +108,7 @@ public class CharacterController2D : MonoBehaviour
 			// If crouching
 			if (crouch)
 			{
+
 				if (!m_wasCrouching)
 				{
 					m_wasCrouching = true;
@@ -163,10 +170,22 @@ public class CharacterController2D : MonoBehaviour
         {
 			SoundManager.PlaySound(SoundManager.Sound.player_move);
         }
+
+		//Disable platforms if user wants to go down
+		if(m_Grounded && down)
+        {
+			Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, 0.25f);
+			foreach (Collider2D collider in colliders)
+            {
+				if(collider.gameObject.tag == "Platform")
+                {
+					collider.gameObject.GetComponent<Platform>().open(m_GroundTouchingCollider);
+                }
+            }
+		}
 	}
 
-
-	private void Flip()
+    private void Flip()
 	{
 		// Switch the way the player is labelled as facing.
 		m_FacingRight = !m_FacingRight;
@@ -175,4 +194,10 @@ public class CharacterController2D : MonoBehaviour
 		//transform.Rotate(0f, 180f, 0f);
 
 	}
+
+	private void SlopeCheck()
+    {
+		//coll
+		//Vector2 checkPos = transform.position - new Vector3(0.0f, m_GroundTouchingCollider.size)
+    }
 }

@@ -104,8 +104,8 @@ GameObject:
   - component: {fileID: 1337221557057169110}
   - component: {fileID: 1337221557057169109}
   - component: {fileID: 1337221557057169108}
-  - component: {fileID: 1337221557057169131}
   - component: {fileID: 1337221557057169107}
+  - component: {fileID: 4503722128774598002}
   - component: {fileID: 1337221557057169132}
   - component: {fileID: 1337221557057169128}
   - component: {fileID: 1337221557057169129}
@@ -208,22 +208,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &1337221557057169131
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1337221557057169106}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.00000023841858, y: -0.12115592}
-  serializedVersion: 2
-  m_Radius: 0.13617617
 --- !u!61 &1337221557057169107
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -250,6 +234,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.25826645, y: 0.34246475}
   m_EdgeRadius: 0
+--- !u!70 &4503722128774598002
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337221557057169106}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0015282631, y: -0.119674504}
+  m_Size: {x: 0.27649593, y: 0.2958449}
+  m_Direction: 0
 --- !u!114 &1337221557057169132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,6 +290,8 @@ MonoBehaviour:
   m_GroundCheck: {fileID: 1337221556142178464}
   m_CeilingCheck: {fileID: 1337221556805166806}
   m_CrouchDisableCollider: {fileID: 1337221557057169107}
+  m_BodyCollider: {fileID: 4503722128774598002}
+  slopeCheckDistance: 0
   OnLandEvent:
     m_PersistentCalls:
       m_Calls: []

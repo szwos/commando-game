@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+//TODO organize variables and take consistent naming convention
+
 public class CharacterController2D : MonoBehaviour
 {
 	[SerializeField] private float m_JumpForce = 400f;							// Amount of force added when the player jumps.
@@ -11,18 +13,25 @@ public class CharacterController2D : MonoBehaviour
 	[SerializeField] private Transform m_GroundCheck;							// A position marking where to check if the player is grounded.
 	[SerializeField] private Transform m_CeilingCheck;							// A position marking where to check for ceilings
 	[SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider that will be disabled when crouching
-	[SerializeField] private Collider2D m_GroundTouchingCollider;				// Collider that will be disabled when passing through platforms
+	[SerializeField] private CapsuleCollider2D m_BodyCollider;              // Collider that will be disabled when passing through platforms
+	[SerializeField] const float k_CeilingRadius = .17f; // Radius of the overlap circle to determine if the player can stand up
+	[SerializeField] const float k_GroundedRadius = .02f; // Radius of the overlap circle to determine if grounded
+	[SerializeField] private float slopeCheckDistance = 0.5f; // // Radius of the overlap circle to determine angle of ground below
 
-	const float k_GroundedRadius = .02f; // Radius of the overlap circle to determine if grounded
+
 	private bool m_Grounded;            // Whether or not the player is grounded.
 	private bool wasFalling;			//was the player falling after jumped
-	const float k_CeilingRadius = .17f; // Radius of the overlap circle to determine if the player can stand up
 	private Rigidbody2D m_Rigidbody2D;
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
 	private bool idle = true;
 	private float lastX = 0;
-	private float ColliderSize;
+	private Vector2 colliderSize;
+	private float SlopeDownAngle;
+	private Vector2 SlopeNormalPerp;
+	private bool isOnSlope;
+	private float SlopeDownAngleOld;
+	private float SlopeSideAngle;
 
 	[Header("Events")]
 	[Space]
@@ -47,6 +56,7 @@ public class CharacterController2D : MonoBehaviour
 		if (OnCrouchEvent == null)
 			OnCrouchEvent = new BoolEvent();
 
+		colliderSize = m_BodyCollider.size;
 	}
 
 	private void FixedUpdate()
@@ -93,16 +103,26 @@ public class CharacterController2D : MonoBehaviour
 		if (!crouch)
 		{
 			// If the character has a ceiling preventing them from standing up, keep them crouching
-			if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
-			{ 
-				crouch = true;
+			if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround)) //TODO this ovelapCircle gets triggered when player is next to a wall
+			{																					   //a) make body wider than head and set overlapCircle radius between their radius
+				crouch = true;																	   //b) instead of overlapCircle use something that only Checks up and down of head (overlapElipsoid??? overlapBox??? overlapCapsule???)
 			}
 		}
 
-		
 
-		//only control the player if grounded or airControl is turned on
-		if (m_Grounded || m_AirControl)
+
+		if (m_Grounded && isOnSlope) //only if player is on the slope
+		{
+			Debug.Log("Moving on slope");
+			//Vector3 targetVelocity = new Vector2(-move * 10f * SlopeNormalPerp.x, m_Rigidbody2D.velocity.y + 10f * SlopeNormalPerp.y * -move);
+			// And then smoothing it out and applying it to the character
+			//m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);\
+
+			Vector2 newVelocity = new Vector2(-move * 10f * SlopeNormalPerp.x, m_Rigidbody2D.velocity.y + 10f * SlopeNormalPerp.y * -move);
+			m_Rigidbody2D.velocity = newVelocity;
+
+		}
+		else if (m_Grounded || m_AirControl) //only control the player if grounded or airControl is turned on
 		{
 
 			// If crouching
@@ -156,13 +176,16 @@ public class CharacterController2D : MonoBehaviour
 			*/
 
 		}
-		// If the player should jump...
+
+
+
+			// If the player should jump...
 		if (m_Grounded && jump)
 		{
 			// Add a vertical force to the player.
 			m_Grounded = false;
 			wasFalling = false;
-			m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+			m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce)); //TODO instead of adding force modify velocity to some value, this will make character always jump the same height
 		}
 
 		//playing walking sound, only when character is grounded
@@ -179,7 +202,7 @@ public class CharacterController2D : MonoBehaviour
             {
 				if(collider.gameObject.tag == "Platform")
                 {
-					collider.gameObject.GetComponent<Platform>().open(m_GroundTouchingCollider);
+					collider.gameObject.GetComponent<Platform>().open(m_BodyCollider);
                 }
             }
 		}
@@ -195,9 +218,62 @@ public class CharacterController2D : MonoBehaviour
 
 	}
 
+
 	private void SlopeCheck()
     {
-		//coll
-		//Vector2 checkPos = transform.position - new Vector3(0.0f, m_GroundTouchingCollider.size)
+
+		Vector2 checkPos = transform.position - new Vector3(0.0f, colliderSize.y / 2);
+		
+		SlopeCheckVertical(checkPos);
+		SlopeCheckHorizontal(checkPos);
+
+	}
+
+	private void SlopeCheckHorizontal(Vector2 checkPos)
+    {
+		RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, transform.right, slopeCheckDistance, m_WhatIsGround);
+		RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, slopeCheckDistance, m_WhatIsGround);
+
+		if(slopeHitFront)
+        {
+			isOnSlope = true;
+			SlopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
+        }else if (slopeHitBack)
+		{
+			isOnSlope = true;
+			SlopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
+        }
+		else
+        {
+			SlopeSideAngle = 0.0f;
+			isOnSlope = false;
+        }
+	}
+
+
+	private void SlopeCheckVertical(Vector2 checkPos)
+    {
+		RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, slopeCheckDistance, m_WhatIsGround);
+
+		if(hit)
+        {
+			SlopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
+
+			SlopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
+
+			if(SlopeDownAngle != SlopeDownAngleOld)
+            {
+				isOnSlope = true;
+            }
+			SlopeDownAngleOld = SlopeDownAngle;
+
+			if (SlopeDownAngle == 0)
+				isOnSlope = false;
+			else
+				isOnSlope = true;
+
+			Debug.DrawRay(hit.point, SlopeNormalPerp, Color.red);
+			Debug.DrawRay(hit.point, hit.normal, Color.green);
+        }
     }
 }

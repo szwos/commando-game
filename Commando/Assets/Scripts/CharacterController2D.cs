@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 //TODO organize variables and take consistent naming convention
+//TODO group stateMachine variables together (isJumping, isGrounded etc.)
 
 public class CharacterController2D : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class CharacterController2D : MonoBehaviour
 	private bool m_Grounded;            // Whether or not the player is grounded.
 	private bool wasFalling;			//was the player falling after jumped
 	private Rigidbody2D m_Rigidbody2D;
+	private Animator anim;
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
 	private bool idle = true;
@@ -32,6 +34,7 @@ public class CharacterController2D : MonoBehaviour
 	private bool isOnSlope;
 	private float SlopeDownAngleOld;
 	private float SlopeSideAngle;
+	
 
 	[Header("Events")]
 	[Space]
@@ -49,6 +52,7 @@ public class CharacterController2D : MonoBehaviour
 	private void Awake()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
+		anim = GetComponent<Animator>();
 
 		if (OnLandEvent == null)
 			OnLandEvent = new UnityEvent();
@@ -61,6 +65,8 @@ public class CharacterController2D : MonoBehaviour
 
 	private void FixedUpdate()
 	{
+
+
 		bool wasGrounded = m_Grounded;
 		m_Grounded = false;
 
@@ -98,7 +104,22 @@ public class CharacterController2D : MonoBehaviour
 
 	public void Move(float move, bool crouch, bool jump, bool down)
 	{
-		
+		//TODO play running animation in reverse when going in opposite direction the player is facing
+
+		if (m_Grounded && wasFalling)
+			anim.SetBool("isJumping", false);
+
+		if (m_Grounded && jump)
+			anim.SetBool("isJumping", true);
+
+
+		anim.SetFloat("verticalSpeed", m_Rigidbody2D.velocity.y);
+
+		if (move == 0)
+			anim.SetBool("isRunning", false);
+		else
+			anim.SetBool("isRunning", true);
+
 		// If crouching, check to see if the character can stand up
 		if (!crouch)
 		{

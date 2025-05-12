@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Menu-styles.uss?fileID=7433441132597879392&amp;guid=da509a03364688b4f83229e9db9c8219&amp;type=3#Menu-styles" />
+    <ui:VisualElement style="flex-grow: 1; flex-basis: auto; flex-direction: column; align-items: center; justify-content: center;">
+        <ui:VisualElement name="Contrainer" style="flex-grow: 0; justify-content: center; flex-basis: auto; align-items: center; flex-direction: column; padding-left: 15%; padding-right: 15%; background-color: rgba(0, 0, 0, 0.33); margin-top: 10%; margin-bottom: 10%; height: auto; padding-top: 10%; padding-bottom: 10%;">
+            <ui:Button text="New Game" display-tooltip-when-elided="true" name="NewGameButton" class="button" style="-unity-background-image-tint-color: rgba(0, 0, 0, 0.67); background-color: rgba(126, 144, 255, 0.23);" />
+            <ui:Button text="Shooting range" display-tooltip-when-elided="true" name="ShootingRangeButton" class="button" />
+            <ui:Button text="Settings" display-tooltip-when-elided="true" name="SettingsButton" class="button" />
+            <ui:Button text="Exit" display-tooltip-when-elided="true" name="ExitButton" class="button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

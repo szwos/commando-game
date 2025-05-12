@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main Menu.unity
     guid: 54c740b2878ebb34a814655aa1aed455
+  - enabled: 1
+    path: Assets/Scenes/Shooting Range.unity
+    guid: 35d3ba0b1e91cdf4885b00b8ca0ec312
+  - enabled: 1
+    path: Assets/Scenes/Settings.unity
+    guid: 587d8c8c2bf5f954db41429b5f9cc257
   m_configObjects: {}
